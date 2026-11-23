@@ -13,7 +13,7 @@ st.caption("Private, local-first document editing powered by Ollama. Review ever
 @st.cache_data(show_spinner=False)
 def load_docx(data):
     doc = Document(io.BytesIO(data))
-    return [(i, p.text, p.style.name) for i, p in enumerate(doc.paragraphs) if p.text.strip()]
+    return [(i, p.text, (p.style.name if p.style is not None else "Normal")) for i, p in enumerate(doc.paragraphs) if p.text.strip()]
 
 def models_at(url):
     r = requests.get(url + "/api/tags", timeout=8)
@@ -69,6 +69,7 @@ if uploaded:
         st.session_state["file_key"] = file_key
         st.session_state["edits"] = {}
         st.session_state["suggestions"] = {}
+        st.session_state.pop("export_bytes", None)
     try:
         paragraphs = load_docx(data)
     except Exception as e:
