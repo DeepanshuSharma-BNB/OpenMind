@@ -30,3 +30,14 @@ This is **not** a validated autonomous scientific discovery system. It does not 
 ## Troubleshooting
 
 If Ollama responds with a 404, check that a model appears in `ollama list`. If literature search returns zero results, check internet connectivity and try a shorter scientific query.
+
+## Word document AI editor
+
+Upload a `.docx`, select a paragraph, rewrite with your installed Ollama model, review suggestions, and export a revised Word file.
+
+```cmd
+python -m pip install -r requirements.txt
+python -m streamlit run word_editor.py
+```
+
+Open http://localhost:8501. For an existing local checkout run `git pull` first. The editor only rewrites selected body paragraphs; tables, headers, footers and text boxes are not editable. Formatting within rewritten paragraphs may be lost, so review the export. Use a capable model such as `qwen3:4b` for better writing quality.
